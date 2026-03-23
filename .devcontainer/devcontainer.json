@@ -1,0 +1,36 @@
+{
+  "name": "MCFT — OpenFOAM v2312",
+  "image": "ubuntu:22.04",
+
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": false,
+      "upgradePackages": true,
+      "username": "vscode",
+      "userUid": "1000",
+      "userGid": "1000"
+    }
+  },
+
+  "postCreateCommand": "bash .devcontainer/install.sh",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools",
+        "darauble.openfoam-settings-syntax"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "files.associations": {
+          "*/system/*":    "cpp",
+          "*/constant/*":  "cpp",
+          "*/0/*":         "cpp",
+          "*/0.orig/*":    "cpp"
+        }
+      }
+    }
+  },
+
+  "remoteUser": "vscode"
+}
