@@ -1,0 +1,19 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  MCFT — Prática 1
+  DT = difusividade térmica = k / (rho * cp)
+  Para estado estacionário o valor de DT não altera a solução final —
+  apenas influencia a velocidade de convergência.
+  Usamos DT = 1e-4 m²/s (típico de metais).
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      transportProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// Dimensões: [massa comprimento tempo temperatura ...]
+//            [ 0    2       -1    0           0 0 0 ] → m²/s
+DT              DT [0 2 -1 0 0 0 0] 1e-4;

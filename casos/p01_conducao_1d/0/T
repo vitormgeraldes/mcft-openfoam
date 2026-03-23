@@ -1,0 +1,45 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  MCFT — Prática 1: Condição inicial e fronteira para T (°C)
+  Exercício 2.1:  T_esquerda = 150 °C,  T_direita = 50 °C
+  Solução analítica (linear): T(x) = 150 - 333.3·x
+  Solução FVM (4 células):    T = [137.5, 112.5, 87.5, 62.5] °C
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      T;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// [0 0 0 0 0 0 0] → campo adimensional (trabalhamos em °C directamente)
+dimensions      [0 0 0 0 0 0 0];
+
+// Condição inicial: interpolação linear entre as duas paredes
+internalField   uniform 100;
+
+boundaryField
+{
+    leftWall
+    {
+        type            fixedValue;
+        value           uniform 150;   // T_esquerda = 150 °C
+    }
+
+    rightWall
+    {
+        type            fixedValue;
+        value           uniform 50;    // T_direita = 50 °C
+    }
+
+    frontAndBack
+    {
+        type            empty;
+    }
+
+    topAndBottom
+    {
+        type            empty;
+    }
+}

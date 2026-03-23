@@ -1,0 +1,71 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  MCFT — Prática 1: Condução 1D estacionária
+  Domínio: barra de L=0.3 m, 4 células (Exercise 2.1 do livro)
+  T_esquerda = 150 °C,  T_direita = 50 °C
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// Comprimento da barra (m)
+L    0.3;
+// Espessura nas direções y e z (desprezável — 1 célula apenas)
+h    0.01;
+
+vertices
+(
+    // x=0 (esquerda)
+    (0    0    0)   // 0
+    ($L   0    0)   // 1
+    ($L   $h   0)   // 2
+    (0    $h   0)   // 3
+    // x=L (direita) — face de trás em z
+    (0    0    $h)  // 4
+    ($L   0    $h)  // 5
+    ($L   $h   $h)  // 6
+    (0    $h   $h)  // 7
+);
+
+blocks
+(
+    // 4 células em x, 1 em y, 1 em z  →  4 células no total
+    hex (0 1 2 3 4 5 6 7) (4 1 1) simpleGrading (1 1 1)
+);
+
+boundary
+(
+    leftWall
+    {
+        type patch;
+        faces ((0 4 7 3));
+    }
+    rightWall
+    {
+        type patch;
+        faces ((1 2 6 5));
+    }
+    // Faces y e z: "empty" — OpenFOAM ignora estas direções (caso 1D)
+    frontAndBack
+    {
+        type empty;
+        faces
+        (
+            (0 1 2 3)
+            (4 5 6 7)
+        );
+    }
+    topAndBottom
+    {
+        type empty;
+        faces
+        (
+            (0 1 5 4)
+            (3 2 6 7)
+        );
+    }
+);

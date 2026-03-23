@@ -1,0 +1,23 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  MCFT — Prática 1
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      fvSolution;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+solvers
+{
+    T
+    {
+        // PCG: Preconditioned Conjugate Gradient — ideal para sistemas simétricos
+        solver          PCG;
+        preconditioner  DIC;   // Diagonal Incomplete Cholesky
+        tolerance       1e-10;
+        relTol          0;
+    }
+}

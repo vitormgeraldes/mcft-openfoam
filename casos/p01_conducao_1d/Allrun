@@ -1,0 +1,25 @@
+#!/bin/sh
+# MCFT — Prática 1: Condução 1D estacionária
+# Corre: blockMesh → laplacianFoam
+cd ${0%/*} || exit 1
+
+. ${WM_PROJECT_DIR:?}/bin/tools/RunFunctions
+
+echo "========================================"
+echo "  MCFT P1 — Condução 1D Estacionária"
+echo "========================================"
+
+# 1. Gerar malha
+runApplication blockMesh
+
+# 2. Correr solver
+runApplication laplacianFoam
+
+echo ""
+echo "Concluído! Solução esperada (Exercise 2.1):"
+echo "  T1 = 137.5 °C  (x = 0.0375 m)"
+echo "  T2 = 112.5 °C  (x = 0.1125 m)"
+echo "  T3 =  87.5 °C  (x = 0.1875 m)"
+echo "  T4 =  62.5 °C  (x = 0.2625 m)"
+echo ""
+echo "Visualiza em SimFlow: File → Open Case → selecciona esta pasta"

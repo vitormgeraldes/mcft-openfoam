@@ -1,0 +1,31 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  MCFT — Prática 1: Condução 1D estacionária
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+application     laplacianFoam;
+
+startFrom       startTime;
+startTime       0;
+
+stopAt          endTime;
+endTime         1;        // Tempo suficiente para atingir estado estacionário
+
+deltaT          0.005;
+
+writeControl    timeStep;
+writeInterval   20;       // Guarda t = 0.1, 0.2, ..., 1.0
+
+purgeWrite      1;        // Guarda só o último instante (estado estacionário)
+
+writeFormat     ascii;
+writePrecision  8;
+
+runTimeModifiable true;
