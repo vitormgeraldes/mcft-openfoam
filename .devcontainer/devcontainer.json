@@ -12,21 +12,20 @@
     }
   },
 
-  "postCreateCommand": "bash .devcontainer/install.sh",
+  "postCreateCommand": "sudo bash .devcontainer/install.sh",
 
   "customizations": {
     "vscode": {
       "extensions": [
-        "ms-vscode.cpptools",
         "darauble.openfoam-settings-syntax"
       ],
       "settings": {
         "terminal.integrated.defaultProfile.linux": "bash",
         "files.associations": {
-          "*/system/*":    "cpp",
-          "*/constant/*":  "cpp",
-          "*/0/*":         "cpp",
-          "*/0.orig/*":    "cpp"
+          "*/system/*":   "cpp",
+          "*/constant/*": "cpp",
+          "*/0/*":        "cpp",
+          "*/0.orig/*":   "cpp"
         }
       }
     }
