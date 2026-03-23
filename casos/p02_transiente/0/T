@@ -1,0 +1,10 @@
+FoamFile { version 2.0; format ascii; class volScalarField; object T; }
+dimensions      [0 0 0 0 0 0 0];
+internalField   uniform 20;    // IC: toda a barra a 20°C
+boundaryField
+{
+    leftWall  { type fixedValue; value uniform 100; }  // step em t=0
+    rightWall { type fixedValue; value uniform 20;  }
+    frontAndBack { type empty; }
+    topAndBottom { type empty; }
+}

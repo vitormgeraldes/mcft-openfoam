@@ -1,0 +1,15 @@
+FoamFile { version 2.0; format ascii; class dictionary; object fvSchemes; }
+
+ddtSchemes
+{
+    // MUDA AQUI para comparar esquemas temporais:
+    //   Euler            → totalmente implícito (incondicionalmente estável) ✓
+    //   CrankNicolson 0.5 → Crank-Nicolson (2ª ordem)
+    //   backward         → totalmente explícito (condicional: Fo < 0.5)
+    default         Euler;
+}
+gradSchemes      { default Gauss linear; }
+divSchemes       { default none; }
+laplacianSchemes { default Gauss linear corrected; }
+interpolationSchemes { default linear; }
+snGradSchemes    { default corrected; }

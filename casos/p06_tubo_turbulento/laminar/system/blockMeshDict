@@ -1,0 +1,21 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  MCFT — Prática 6A: Tubo laminar Re=1000
+  Meio-canal 2D: L=2m, H/2=0.05m, symmetryPlane em y=0
+  U=0.01 m/s, nu=1e-6 → Re = 0.01*0.1/1e-6 = 1000
+\*---------------------------------------------------------------------------*/
+FoamFile { version 2.0; format ascii; class dictionary; object blockMeshDict; }
+L 2.0;  H 0.05;  h 0.01;
+vertices
+(
+    (0 0 0) ($L 0 0) ($L $H 0) (0 $H 0)
+    (0 0 $h) ($L 0 $h) ($L $H $h) (0 $H $h)
+);
+blocks ( hex (0 1 2 3 4 5 6 7) (100 20 1) simpleGrading (1 1 1) );
+boundary
+(
+    inlet    { type patch; faces ((0 4 7 3)); }
+    outlet   { type patch; faces ((1 2 6 5)); }
+    wall     { type wall;  faces ((3 2 6 7)); }
+    symmetry { type symmetryPlane; faces ((0 1 5 4)); }
+    frontAndBack { type empty; faces ((0 1 2 3)(4 5 6 7)); }
+);

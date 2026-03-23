@@ -1,0 +1,31 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  MCFT — Prática 5: Canal 2D com plano de simetria
+  Meio-canal: L=2m, H/2=0.05m. symmetryPlane na linha central (y=0).
+  Re = U*H/nu = 0.1*0.1/1e-4 = 100
+\*---------------------------------------------------------------------------*/
+FoamFile { version 2.0; format ascii; class dictionary; object blockMeshDict; }
+
+L    2.0;    // comprimento
+H    0.05;   // metade da altura (plano de simetria em y=0)
+h    0.01;   // espessura z (1 célula)
+
+vertices
+(
+    (0   0    0)  ($L  0    0)  ($L  $H  0)  (0   $H  0)
+    (0   0    $h) ($L  0    $h) ($L  $H  $h) (0   $H  $h)
+);
+
+blocks
+(
+    // grading em y: refinamento para a parede (topo)
+    hex (0 1 2 3 4 5 6 7) (80 15 1) simpleGrading (1 4 1)
+);
+
+boundary
+(
+    inlet        { type patch; faces ((0 4 7 3)); }
+    outlet       { type patch; faces ((1 2 6 5)); }
+    wall         { type wall;  faces ((3 2 6 7)); }   // parede sólida (topo)
+    symmetry     { type symmetryPlane; faces ((0 1 5 4)); }  // linha central
+    frontAndBack { type empty; faces ((0 1 2 3)(4 5 6 7)); }
+);

@@ -1,0 +1,8 @@
+FoamFile { version 2.0; format ascii; class dictionary; object momentumTransport; }
+simulationType  RAS;
+RAS
+{
+    model           kEpsilon;     // modelo padrão k-ε
+    turbulence      on;
+    printCoeffs     on;
+}

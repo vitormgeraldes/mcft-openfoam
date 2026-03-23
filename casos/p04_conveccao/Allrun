@@ -1,0 +1,13 @@
+#!/bin/sh
+cd ${0%/*} || exit 1
+. ${WM_PROJECT_DIR:?}/bin/tools/RunFunctions
+echo "=== MCFT P4 — Cavidade com Tampa (SIMPLE, Re=100) ==="
+echo "Esquema actual: $(grep 'div(phi,U)' system/fvSchemes | head -1)"
+runApplication blockMesh
+runApplication simpleFoam
+runApplication foamToVTK
+echo ""
+echo "Experimenta:"
+echo "  1. Muda div(phi,U) em system/fvSchemes para 'Gauss upwind'"
+echo "  2. Corre ./Allclean && ./Allrun"
+echo "  3. Compara os campos de velocidade no ParaView"

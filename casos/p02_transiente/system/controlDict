@@ -1,0 +1,14 @@
+FoamFile { version 2.0; format ascii; class dictionary; object controlDict; }
+
+application     laplacianFoam;
+startFrom       startTime;
+startTime       0;
+stopAt          endTime;
+endTime         5000;      // ~L²/DT = 0.5²/5e-5 = 5000 s
+deltaT          25;        // Δt = 25 s
+writeControl    timeStep;
+writeInterval   20;        // guarda a cada 500 s
+purgeWrite      0;         // guarda todos os instantes (para animação)
+writeFormat     ascii;
+writePrecision  6;
+runTimeModifiable true;

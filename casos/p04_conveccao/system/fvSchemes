@@ -1,0 +1,18 @@
+FoamFile { version 2.0; format ascii; class dictionary; object fvSchemes; }
+
+ddtSchemes      { default steadyState; }
+gradSchemes     { default Gauss linear; }
+
+divSchemes
+{
+    default         none;
+    // MUDA AQUI para comparar esquemas de convecção:
+    //   Gauss upwind        → 1ª ordem, estável, difusivo
+    //   Gauss linearUpwind  → 2ª ordem, upwind limitado  (recomendado)
+    //   Gauss linear        → 2ª ordem central (instável a Re alto)
+    div(phi,U)      Gauss linearUpwind grad(U);
+}
+
+laplacianSchemes { default Gauss linear corrected; }
+interpolationSchemes { default linear; }
+snGradSchemes    { default corrected; }

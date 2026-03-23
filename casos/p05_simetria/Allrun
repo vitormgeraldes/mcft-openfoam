@@ -1,0 +1,12 @@
+#!/bin/sh
+cd ${0%/*} || exit 1
+. ${WM_PROJECT_DIR:?}/bin/tools/RunFunctions
+echo "=== MCFT P5 — Canal com Plano de Simetria (Re=100) ==="
+runApplication blockMesh
+runApplication checkMesh     # verifica não-ortogonalidade
+runApplication simpleFoam
+runApplication foamToVTK
+echo ""
+echo "No ParaView: observa o perfil parabólico de Poiseuille."
+echo "A solução num meio-canal com symmetryPlane é idêntica"
+echo "à solução no canal completo — metade do custo computacional!"

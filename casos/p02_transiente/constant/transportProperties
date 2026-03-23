@@ -1,0 +1,4 @@
+FoamFile { version 2.0; format ascii; class dictionary; object transportProperties; }
+// DT = difusividade térmica (m²/s) — aceiro típico: k=50, rho=7800, cp=500 → DT≈1.28e-5
+// Usamos 5e-5 para a simulação ser mais rápida
+DT              DT [0 2 -1 0 0 0 0] 5e-5;

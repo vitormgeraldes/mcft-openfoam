@@ -1,0 +1,40 @@
+#!/bin/sh
+# MCFT — Prática 3: 2D + Richardson extrapolation
+# Corre automaticamente com N=8, 16, 32 e extrai T no centro
+cd ${0%/*} || exit 1
+. ${WM_PROJECT_DIR:?}/bin/tools/RunFunctions
+
+echo "=== MCFT P3 — Condução 2D + Richardson ==="
+echo ""
+
+RESULTS=""
+for N in 8 16 32; do
+    echo "--- Malha ${N}x${N} ---"
+
+    # Mudar N no blockMeshDict
+    sed -i "s/^N .*/N    ${N};/" system/blockMeshDict
+
+    runApplication blockMesh
+    runApplication laplacianFoam
+    runApplication foamToVTK -time '10'
+
+    # Extrair T no centro (cel. mais próxima de 0.5, 0.5)
+    T_centro=$(postProcess -func 'patchAverage(patch=leftWall,field=T)' -latestTime 2>/dev/null | \
+               grep -oP 'areaAverage.*? = \K[0-9.e+-]+' | tail -1)
+
+    # Usar probes para obter T no centro
+    runApplication -s probe_${N} postProcess -func probeLocations -latestTime
+
+    # Guardar resultados VTK com nome diferente
+    mv VTK VTK_${N}x${N} 2>/dev/null || true
+
+    ./Allclean > /dev/null 2>&1
+    echo "  N=${N}: VTK guardado em VTK_${N}x${N}/"
+    echo ""
+done
+
+echo "========================================"
+echo "  Richardson extrapolation:"
+echo "  Ver README.md para o procedimento."
+echo "  VTK gerado: VTK_8x8/, VTK_16x16/, VTK_32x32/"
+echo "========================================"

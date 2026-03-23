@@ -1,0 +1,30 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  MCFT — Prática 3: Condução 2D estacionária
+  Quadrado 1m × 1m. Para Richardson, muda N: 8 → 16 → 32
+  BC: esquerda=100°C, outras três paredes=0°C
+\*---------------------------------------------------------------------------*/
+FoamFile { version 2.0; format ascii; class dictionary; object blockMeshDict; }
+
+N    16;   // células por lado — muda para 8 e 32 (Richardson)
+L    1.0;
+h    0.01;
+
+vertices
+(
+    (0   0   0)   ($L  0   0)   ($L  $L  0)   (0   $L  0)
+    (0   0   $h)  ($L  0   $h)  ($L  $L  $h)  (0   $L  $h)
+);
+
+blocks
+(
+    hex (0 1 2 3 4 5 6 7) ($N $N 1) simpleGrading (1 1 1)
+);
+
+boundary
+(
+    leftWall   { type patch; faces ((0 4 7 3)); }
+    rightWall  { type patch; faces ((1 2 6 5)); }
+    bottomWall { type patch; faces ((0 1 5 4)); }
+    topWall    { type patch; faces ((3 2 6 7)); }  // corrigido: (3 7 6 2) ou (2 3 7 6)
+    frontAndBack { type empty; faces ((0 1 2 3)(4 5 6 7)); }
+);

@@ -1,0 +1,13 @@
+FoamFile { version 2.0; format ascii; class volScalarField; object epsilon; }
+// ε = Cμ^(3/4) * k^(3/2) / l_t   onde l_t = 0.07*D = 0.007 m
+// ε = 0.1643 * 2.30e-4 / 0.007 = 0.0054 m²/s³
+dimensions [0 2 -3 0 0 0 0];
+internalField uniform 0.0054;
+boundaryField
+{
+    inlet    { type fixedValue; value uniform 0.0054; }
+    outlet   { type zeroGradient; }
+    wall     { type epsilonWallFunction; value uniform 0.0054; }
+    symmetry { type symmetryPlane; }
+    frontAndBack { type empty; }
+}

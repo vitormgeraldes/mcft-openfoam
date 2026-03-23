@@ -1,0 +1,24 @@
+#!/bin/sh
+# MCFT — Prática 6: Tubo laminar (Re=1000) e turbulento (Re=100000)
+cd ${0%/*} || exit 1
+. ${WM_PROJECT_DIR:?}/bin/tools/RunFunctions
+
+echo "=== MCFT P6A — Tubo Laminar Re=1000 ==="
+cd laminar
+runApplication blockMesh
+runApplication simpleFoam
+runApplication foamToVTK
+cd ..
+
+echo ""
+echo "=== MCFT P6B — Tubo Turbulento Re=100000 (k-epsilon) ==="
+cd turbulento
+runApplication blockMesh
+runApplication simpleFoam
+runApplication foamToVTK
+cd ..
+
+echo ""
+echo "Compara os perfis de velocidade no ParaView:"
+echo "  Laminar  → perfil parabólico (Poiseuille)"
+echo "  Turbulento → perfil mais uniforme (mais plano no centro)"
